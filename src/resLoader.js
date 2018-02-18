@@ -62,13 +62,23 @@ var resLoader = function(){
 					},settings);
 				}
 			} else {
-				var e = document.createElement('script');
-				e.src = cfg.url;
+				var e;
+				if(cfg.url.match(/\.js/i)){
+					e = document.createElement('script');
+					e.type = 'text/javascript';
+					e.src = cfg.url;
+				} else if(cfg.url.match(/\.css/i)){
+					e = document.createElement('link');
+					e.type = 'text/css';
+					e.rel = 'stylesheet';
+					e.media = (settings.async)?'none':'all';
+					e.href = cfg.url;
+				} 
 				e.async = settings.async;
-				e.type = 'text/javascript';
 				{
 					var o = {
-						path:e.src,
+						path:e.src||e.href,
+						elm:e,
 						url:cfg.url,
 						onComplete: settings.onComplete,
 						onLoadAll: settings.onLoadAll,
@@ -91,6 +101,10 @@ var resLoader = function(){
 						} else {
 							o.onLoadAll();
 							o.onComplete();
+						}
+						if(o.path.match(/\.css/i) && o.settings.async){
+							o.elm.onload=function(){}; // To not trigger onload once more when media i changed.
+							o.elm.media='all';
 						}
 					}
 				}
