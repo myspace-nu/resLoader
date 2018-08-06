@@ -57,6 +57,25 @@ You can also add conditions for the resource to be loaded. Like, only load jQuer
 
 *Note that onComplete is called regardless of the test is evaluted to true or false, i.e. in the example the code will be executed even if jQuery has been loaded earlier on the page*
 
+If you include different resources to the same html out and there is a chance that several of the resources include for example jQuery you can solve this by loading these scripts synchronously like this.
+
+    <script src="/path/to/resLoad.min.js"></script>
+	<script type="text/javascript">
+		var loader = new resLoader();
+		loader.load([
+			{ url:"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js", unless:window.jQuery, async:false }
+		]);
+	</script>
+	...
+    <script src="/path/to/resLoad.min.js"></script>
+	<script type="text/javascript">
+		var loader = new resLoader();
+		loader.load([
+			{ url:"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js", unless:window.jQuery, async:false } // jQuery will not be loaded a second time in this example.
+		]);
+	</script>
+
+
 ## Options
 **url** - Resource urls to be loaded [array or string]
 
@@ -72,9 +91,17 @@ You can also add conditions for the resource to be loaded. Like, only load jQuer
 
 	loadUnless: window.jQuery
 
+**unless** - Shorthand for loadUnless
+
+	unless: window.jQuery
+
 **loadIf** - Load the resource if expression is true
 
 	loadIf: window.jQuery
+
+**if** - Shorthand for loadIf
+
+	if: window.jQuery
 
 **onComplete** - Callback to be executed when everything is done (regardless of any conditional tests)
 
@@ -90,6 +117,6 @@ You can also add conditions for the resource to be loaded. Like, only load jQuer
 
 **onLoadAll** - Callback to be executed when all resources have beed loaded.
 
-	onLoad: function(){
+	onLoadAll: function(){
 		console.log("All resources are loaded");
 	}
