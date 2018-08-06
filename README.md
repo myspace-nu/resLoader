@@ -49,6 +49,7 @@ You can also add conditions for the resource to be loaded. Like, only load jQuer
 		loader.load({
 			url: "//code.jquery.com/jquery-3.3.1.min.js",
 			loadUnless: window.jQuery,
+			async:false,
 			onComplete: function(){
 				$("body").append("<p>One more paragraph</p>");
 			}
@@ -63,7 +64,7 @@ If you include different resources to the same html out and there is a chance th
 	<script type="text/javascript">
 		var loader = new resLoader();
 		loader.load([
-			{ url:"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js", unless:window.jQuery, async:false }
+			{ url:"//code.jquery.com/jquery-3.3.1.min.js", unless:window.jQuery, async:false }
 		]);
 	</script>
 	...
@@ -71,7 +72,7 @@ If you include different resources to the same html out and there is a chance th
 	<script type="text/javascript">
 		var loader = new resLoader();
 		loader.load([
-			{ url:"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js", unless:window.jQuery, async:false } // jQuery will not be loaded a second time in this example.
+			{ url:"//code.jquery.com/jquery-3.3.1.min.js", unless:window.jQuery, async:false } // jQuery will not be loaded a second time in this example.
 		]);
 	</script>
 
