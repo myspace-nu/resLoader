@@ -7,7 +7,7 @@
  */
 if(typeof resLoader === "undefined"){
 	window.resLoadedStorage = {
-		onLoad: {}
+		onLoad: []
 	};
 	var resLoader = function(settings){
 		this.scriptsLoaded = {}; // Scripts currently loaded
@@ -17,7 +17,8 @@ if(typeof resLoader === "undefined"){
 		this.onLoadAllExecuted = false; // Prevent from firing more than once, timing issue
 		this.scriptElement;
 		this.defaultSettings = {
-			async:(settings && typeof settings.async === 'boolean') ? settings.async : true
+			async:(settings && typeof settings.async === 'boolean') ? settings.async : true,
+			blocking:(settings && typeof settings.blocking === 'boolean') ? settings.blocking : false
 		};
 		this.objectSize = function(obj){
 		    var size = 0;
@@ -44,7 +45,11 @@ if(typeof resLoader === "undefined"){
 				async:
 					(typeof(cfg.async) === 'boolean')?cfg.async:
 					(typeof(tmpl.async) === 'boolean')?tmpl.async:
-					this.defaultSettings.async
+					this.defaultSettings.async,
+				blocking:
+					(typeof(cfg.blocking) === 'boolean')?cfg.blocking:
+					(typeof(tmpl.blocking) === 'boolean')?tmpl.blocking:
+					this.defaultSettings.blocking
 			}
 			if(typeof cfg.url === 'string'){
 				var e = document.createElement('script');
@@ -119,9 +124,9 @@ if(typeof resLoader === "undefined"){
 							}
 						}
 					}
-					if(settings.async === false && e.type === 'text/javascript'){
-						window.resLoadedStorage.onLoad[e.src] = e.onload;
-						document.write("<scr"+"ipt src=\""+cfg.url+"\" onload=\"window.resLoadedStorage.onLoad['"+e.src+"']();\"></scr"+"ipt>");
+					if(settings.blocking && e.type === 'text/javascript'){
+						window.resLoadedStorage.onLoad.push(e.onload);
+						document.write("<scr"+"ipt src=\""+cfg.url+"\" onload=\"window.resLoadedStorage.onLoad["+(window.resLoadedStorage.onLoad.length-1)+"]();\"></scr"+"ipt>");
 					} else {
 						var thisScriptElement = document.getElementsByTagName('script')[0];
 						thisScriptElement.parentNode.insertBefore(e, thisScriptElement);
