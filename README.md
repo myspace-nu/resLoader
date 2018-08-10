@@ -2,11 +2,22 @@
 
 A JavaScript resource loader featuring conditional loading, asynchronous- or sequential loading
 
+[![Build Status](https://travis-ci.org/myspace-nu/resLoader.svg?branch=master)](https://travis-ci.org/myspace-nu/resLoader)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/myspace-nu/resLoader/blob/master/LICENSE)
+
 ## Installation
 
-Simply include the script with
+Using npm
 
-    <script src="/path/to/resLoad.min.js"></script>
+	npm install @myspace-nu/resloader --save
+
+Using CDN
+
+	<script src="https://cdn.jsdelivr.net/npm/@myspace-nu/resloader/dist/resLoader.min.js"></script>
+
+Or include the script manually
+
+	<script src="/path/to/resLoad.min.js"></script>
 
 ## Usage
 

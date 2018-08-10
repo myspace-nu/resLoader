@@ -1,10 +1,11 @@
 {
   "name": "@myspace-nu/resloader",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A JavaScript resource loader featuring conditional loading, asynchronous- or sequential loading",
   "main": "dist/resLoader.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt",
+    "prepublish": "grunt"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/myspace-nu/resLoader/issues"
   },
-  "homepage": "https://github.com/myspace-nu/resLoader#readme"
+  "homepage": "https://github.com/myspace-nu/resLoader#readme",
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-contrib-uglify": "^3.4.0"
+  }
 }
