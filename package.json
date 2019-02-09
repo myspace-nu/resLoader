@@ -25,5 +25,8 @@
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-uglify": "^3.4.0"
+  },
+  "dependencies": {
+    "npm-check-updates": "^2.15.0"
   }
 }
