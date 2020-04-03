@@ -5,7 +5,7 @@
   "main": "dist/resLoader.min.js",
   "scripts": {
     "test": "grunt",
-    "prepublish": "grunt"
+    "prepare": "grunt"
   },
   "repository": {
     "type": "git",
