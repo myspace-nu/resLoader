@@ -1,6 +1,6 @@
 {
   "name": "@myspace-nu/resloader",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A JavaScript resource loader featuring conditional loading, asynchronous- or sequential loading",
   "main": "dist/resLoader.min.js",
   "scripts": {
