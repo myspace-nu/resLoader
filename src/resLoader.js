@@ -74,6 +74,11 @@ if(typeof resLoader === "undefined"){
 					url:cfg,
 				},settings);
 			}
+			if(Array.isArray(cfg.resources)){
+				for(var i in cfg.resources){
+					this.load(cfg.resources[i], settings);
+				}
+			}
 			if(cfg.url){
 				if(Array.isArray(cfg.url)){
 					for(var s in cfg.url){
@@ -93,7 +98,12 @@ if(typeof resLoader === "undefined"){
 						e.rel = 'stylesheet';
 						e.media = (settings.async)?'none':'all';
 						e.href = cfg.url;
-					} 
+					}
+					if(cfg.integrity && cfg.crossorigin){
+						console.warn("Integrity checking is only possible when loading scripts in blocking mode. https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity");
+						// e.integrity = cfg.integrity;
+						// e.crossorigin = cfg.crossorigin;
+					}
 					e.async = settings.async;
 					{
 						var o = {
@@ -109,14 +119,14 @@ if(typeof resLoader === "undefined"){
 						var caller = this;
 						e.onload = function(){
 							caller.scriptsLoaded[o.path] = true;
-							o.onLoad();
+							o.onLoad(caller,this);
 							if(caller.objectSize(caller.scriptsLoaded) == caller.objectSize(caller.scriptsToHandle) && !caller.onLoadAllExecuted){
 								caller.onLoadAllExecuted = true;
-								o.onLoadAll();
+								o.onLoadAll(caller,this);
 							}
 							if(caller.objectSize(caller.scriptsLoaded) == caller.objectSize(caller.scriptsToLoad) && !caller.onCompleteExecuted){
 								caller.onCompleteExecuted = true;
-								o.onComplete();
+								o.onComplete(caller,this);
 							}
 							if(o.path.match(/\.css/i) && o.settings.async){
 								o.elm.onload=function(){}; // To not trigger onload once more when media i changed.
@@ -126,7 +136,10 @@ if(typeof resLoader === "undefined"){
 					}
 					if(settings.blocking && e.type === 'text/javascript'){
 						window.resLoadedStorage.onLoad.push(e.onload);
-						document.write("<scr"+"ipt src=\""+cfg.url+"\" onload=\"window.resLoadedStorage.onLoad["+(window.resLoadedStorage.onLoad.length-1)+"]();\"></scr"+"ipt>");
+						var scriptTag = "<scr"+"ipt src=\""+cfg.url+"\" onload=\"window.resLoadedStorage.onLoad["+(window.resLoadedStorage.onLoad.length-1)+"]();\"";
+						scriptTag += (cfg.integrity && cfg.crossorigin) ? " integrity=\""+cfg.integrity+"\" crossorigin=\""+cfg.crossorigin+"\"" : "";
+						scriptTag += "></scr"+"ipt>"
+						document.write(scriptTag);
 					} else {
 						var thisScriptElement = document.getElementsByTagName('script')[0];
 						thisScriptElement.parentNode.insertBefore(e, thisScriptElement);
