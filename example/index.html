@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>resLoader</title>
+	</head>
+	<body>
+		<div class="container">
+            <h1>resLoader</h1>
+            <p class="test-1">Paragraph using test-1 class.</p>
+            <p class="test-2">Paragraph using test-2 class.</p>
+        </div>
+		<script src="../src/resLoader.js"></script>
+		<script type="text/javascript">
+            var loader = new resLoader();
+            loader.load({
+                url: [
+                    "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css",
+                    "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
+                    "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js",
+                ],
+                async: false
+            });
+        </script>
+        <!-- Loading resLoader.js multiple times is a waste of time, but it will not break functionality -->
+		<script src="../src/resLoader.js"></script>
+		<script type="text/javascript">
+            new resLoader().load({
+                resources: [
+                    { url: "example.js?"+Math.random().toString(36).substring(7), onLoad:function(loader,script){ console.log("Custom onload event triggered for "+script.src+"."); } },
+                    { url: "example.js?"+Math.random().toString(36).substring(7) },
+                    { url: "example.js?"+Math.random().toString(36).substring(7) },
+                    { url: "example.js?"+Math.random().toString(36).substring(7) },
+                    { url: "example.css?"+Math.random().toString(36).substring(7) },
+                ],
+                onLoad: function(loader, script) {
+                    console.log("Generic onload event triggered for "+script.src+".");
+                },
+                onLoadAll: function(loader, script) {
+                    console.log("All resources were loaded successfully.");
+                },
+                onComplete: function(loader, script) {
+                    console.log("All done, regardless of loading conditions.");
+                }
+            });
+		</script>
+	</body>
+</html>
