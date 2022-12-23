@@ -4,6 +4,8 @@ A JavaScript resource loader featuring conditional loading, asynchronous- or seq
 
 [![Build Status](https://travis-ci.org/myspace-nu/resLoader.svg?branch=master)](https://travis-ci.org/myspace-nu/resLoader)
 [![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/myspace-nu/resLoader/blob/master/LICENSE)
+[![Code size](https://img.shields.io/github/languages/code-size/myspace-nu/resLoader)](https://github.com/myspace-nu/resLoader)
+[![Issues](https://img.shields.io/github/issues-raw/myspace-nu/resLoader)](https://github.com/myspace-nu/resLoader/issues)
 
 ## Installation
 
